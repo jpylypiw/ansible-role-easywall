@@ -1,0 +1,17 @@
+---
+galaxy_info:
+  author: Jochen Pylypiw
+  description: Ansible role for installing the easywall core and easywall web interface
+  issue_tracker_url: https://github.com/jpylypiw/ansible-role-easywall/issues
+  license: GPL-3.0-only
+  min_ansible_version: 2.9
+  platforms:
+    - name: Debian
+      versions:
+        - 10
+  galaxy_tags:
+    - firewall
+    - easywall
+    - iptables
+    - webinterface
+dependencies: []
