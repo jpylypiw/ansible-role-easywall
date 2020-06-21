@@ -1,0 +1,63 @@
+# documentation on https://help.github.com/en/actions/language-and-framework-guides/using-python-with-github-actions
+name: testing
+
+on: [push, pull_request]
+
+jobs:
+  testing:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8]
+
+    steps:
+      - name: Check out the Repository
+        uses: actions/checkout@master
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@master
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install Python dependencies
+        run: |
+          python --version
+          python -m pip install --upgrade pip
+
+      - name: Prepare Python Environment
+        run: |
+          pip install virtualenv
+          virtualenv venv
+          source venv/bin/activate
+
+      - name: Install Software Requirements
+        run: |
+          pip install --upgrade ansible
+          ansible --version
+          pip install --upgrade ansible-lint
+          ansible-lint --version
+          pip install --upgrade yamllint
+          yamllint --version
+
+      - name: Execute Playbook
+        run: |
+          ansible-playbook tests/test.yml -c local
+
+      - name: Ansible Linting
+        run: |
+          ansible-lint --exclude roles --force-color -p -x 204 -v
+
+      - name: Yamllint
+        run: |
+          yamllint .
+
+  markdownlint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the Repository
+        uses: actions/checkout@master
+
+      - name: Run markdownlint (mdl)
+        uses: bewuethr/mdl-action@master
+        with:
+          style-file: .github/workflows/markdownlint.rb
