@@ -1,0 +1,11 @@
+---
+- hosts: localhost
+  remote_user: root
+  tasks:
+    - name: "execute ansible-role-easywall role"
+      include_role:
+        name: "ansible-role-easywall"
+      vars:
+        webinterface: true
+        username: "easywall"
+        password: "easywall"
