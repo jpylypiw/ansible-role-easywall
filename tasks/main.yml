@@ -1,0 +1,39 @@
+---
+# tasks file for ansible-role-easywall
+- name: "create easywall directory"
+  file:
+    path: /opt/easywall
+    state: directory
+    mode: "0755"
+
+- name: "download easywall from GitHub"
+  get_url:
+    url: https://github.com/jpylypiw/easywall/archive/master.zip
+    dest: /opt/easywall/master.zip
+    mode: "0644"
+
+- name: "unzip installation file"
+  unarchive:
+    src: /opt/easywall/master.zip
+    dest: /opt/easywall
+    remote_src: yes
+
+- name: "move files in place and clean up"
+  shell: |
+    mv /opt/easywall/easywall-master/* /opt/easywall
+    rm /opt/easywall/master.zip
+    rm -r /opt/easywall/easywall-master
+
+- name: "execute core installation script"
+  shell: |
+    bash /opt/easywall/scripts/install-core.sh
+
+- name: "execute web installation script"
+  shell: |
+    bash /opt/easywall/scripts/install-web.sh
+  when: webinterface|bool
+
+- name: "set up username and password"
+  shell: |
+    python3 /opt/easywall/easywall_web/passwd.py -u {{ easywall_username }} -p {{ easywall_password }}
+  when: webinterface|bool
