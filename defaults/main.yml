@@ -1,0 +1,5 @@
+---
+# defaults file for ansible-role-easywall
+webinterface: true
+#easywall_username: "easywall"
+#easywall_password: "easywall"
