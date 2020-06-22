@@ -1,28 +1,76 @@
 ---
 # tasks file for ansible-role-easywall
+- name: "check if easywall is already installed"
+  stat:
+    path: /opt/easywall
+  register: easywall_details
+
+- name: "ensure easywall is stopped"
+  systemd:
+    name: easywall
+    state: stopped
+  when: easywall_details.stat.exists
+
+- name: "ensure easywall-web is stopped"
+  systemd:
+    name: easywall-web
+    state: stopped
+  when: easywall_details.stat.exists
+
+- name: "remove old backup folder"
+  file:
+    state: absent
+    path: /opt/easywall-backup
+  when: easywall_details.stat.exists
+
+- name: "rename installation folder to backup folder"
+  command: mv /opt/easywall /opt/easywall-backup
+  args:
+    creates: /opt/easywall-backup
+    removes: /opt/easywall
+  when: easywall_details.stat.exists
+
 - name: "create easywall directory"
   file:
     path: /opt/easywall
     state: directory
     mode: "0755"
 
-- name: "download easywall from GitHub"
+- name: "download installation file"
   get_url:
     url: https://github.com/jpylypiw/easywall/archive/master.zip
-    dest: /opt/easywall/master.zip
+    dest: /opt/easywall
     mode: "0644"
 
-- name: "unzip installation file"
+- name: "ensure unzip is installed"
+  apt:
+    name: unzip
+    state: present
+
+- name: "extract installation file"
   unarchive:
-    src: /opt/easywall/master.zip
+    src: /opt/easywall/easywall-master.zip
     dest: /opt/easywall
     remote_src: yes
 
 - name: "move files in place and clean up"
   shell: |
     mv /opt/easywall/easywall-master/* /opt/easywall
-    rm /opt/easywall/master.zip
+    mv /opt/easywall/easywall-master/.* /opt/easywall
+    rm /opt/easywall/easywall-master.zip
     rm -r /opt/easywall/easywall-master
+
+- name: "copy files from old installation"
+  shell: |
+    [ -f "/opt/easywall-backup/config/web.ini" ] && cp -a /opt/easywall-backup/config/web.ini /opt/easywall/config/
+    [ -f "/opt/easywall-backup/config/easywall.ini" ] && cp -a /opt/easywall-backup/config/easywall.ini /opt/easywall/config/
+    [ -d "/opt/easywall-backup/backup" ] && mkdir -p /opt/easywall/backup/
+    [ -d "/opt/easywall-backup/backup" ] && cp -ar /opt/easywall-backup/backup/* /opt/easywall/backup/
+    [ -d "/opt/easywall-backup/rules/" ] && mkdir -p /opt/easywall/rules/
+    [ -d "/opt/easywall-backup/rules/" ] && cp -ar /opt/easywall-backup/rules/* /opt/easywall/rules/
+    [ -d "/opt/easywall-backup/ssl/" ] && mkdir -p /opt/easywall/ssl/
+    [ -d "/opt/easywall-backup/ssl/" ] && cp -ar /opt/easywall-backup/ssl/* /opt/easywall/ssl/
+  when: easywall_details.stat.exists
 
 - name: "execute core installation script"
   shell: |
@@ -35,5 +83,16 @@
 
 - name: "set up username and password"
   shell: |
-    python3 /opt/easywall/easywall_web/passwd.py -u {{ easywall_username }} -p {{ easywall_password }}
+    cd /opt/easywall
+    python3 easywall_web/passwd.py -u {{ easywall_username }} -p '{{ easywall_password }}'
   when: webinterface|bool
+
+- name: "ensure easywall is restarted"
+  systemd:
+    name: easywall
+    state: restarted
+
+- name: "ensure easywall-web is restarted"
+  systemd:
+    name: easywall-web
+    state: restarted
