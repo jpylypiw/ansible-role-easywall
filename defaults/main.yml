@@ -3,8 +3,8 @@
 webinterface: true
 
 # has to be programmed
-#easywall_username: "easywall"
-#easywall_password: "easywall"
+# easywall_username: "easywall"
+# easywall_password: "easywall"
 
 # Set to true to ensure other firewall management software is disabled.
 firewall_disable_firewalld: true

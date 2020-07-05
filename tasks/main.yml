@@ -59,7 +59,7 @@
   unarchive:
     src: /opt/easywall/easywall-master.zip
     dest: /opt/easywall
-    remote_src: yes
+    remote_src: true
 
 - name: "move files in place and clean up"
   shell: |
