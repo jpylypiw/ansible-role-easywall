@@ -22,3 +22,7 @@ rules:
   quoted-strings: disable
   trailing-spaces: enable
   truthy: enable
+
+ignore: |
+  .github/FUNDING.yml
+  .github/workflows/python-package.yml
