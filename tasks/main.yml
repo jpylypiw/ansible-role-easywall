@@ -1,5 +1,13 @@
 ---
 # tasks file for ansible-role-easywall
+- name: Ensure iptables is present.
+  package:
+    name: "iptables"
+    state: "present"
+
+- import_tasks: disable-other-firewalls.yml
+  when: firewall_disable_firewalld or firewall_disable_ufw
+
 - name: "check if easywall is already installed"
   stat:
     path: /opt/easywall
