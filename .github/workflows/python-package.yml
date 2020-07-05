@@ -39,9 +39,9 @@ jobs:
           pip install --upgrade yamllint
           yamllint --version
 
-      - name: Execute Playbook
-        run: |
-          ansible-playbook tests/test.yml -c local
+      # - name: Execute Playbook
+      #   run: |
+      #     ansible-playbook tests/test.yml -c local
 
       - name: Ansible Linting
         run: |
