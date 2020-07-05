@@ -24,5 +24,4 @@ rules:
   truthy: enable
 
 ignore: |
-  .github/FUNDING.yml
   .github/workflows/python-package.yml
