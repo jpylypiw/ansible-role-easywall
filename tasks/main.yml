@@ -37,6 +37,7 @@
     cd /opt/easywall
     python3 easywall/web/passwd.py -u {{ easywall_username }} -p '{{ easywall_password }}'
   when: webinterface and easywall_username | length > 0 and easywall_password | length > 0
+  notify: "restart-web"
 
 - name: "copy ssl certificate on the remote system to easywall install dir"
   copy:
@@ -45,6 +46,7 @@
     remote_src: true
     mode: "0600"
   when: webinterface and ssl_cert_path | length > 0
+  notify: "restart-web"
 
 - name: "copy ssl certificate key on the remote system to easywall install dir"
   copy:
@@ -53,6 +55,7 @@
     remote_src: true
     mode: "0600"
   when: webinterface and ssl_key_path | length > 0
+  notify: "restart-web"
 
 - name: "stop easywall-web and disable service when webinterface is false"
   systemd:
@@ -61,13 +64,3 @@
     state: stopped
     masked: true
   when: not webinterface
-
-- name: "ensure easywall is restarted"
-  systemd:
-    name: easywall
-    state: restarted
-
-- name: "ensure easywall-web is restarted"
-  systemd:
-    name: easywall-web
-    state: restarted
