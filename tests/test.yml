@@ -1,6 +1,7 @@
 ---
 - hosts: localhost
   remote_user: root
+  become: true
   tasks:
     - name: "execute ansible-role-easywall role"
       include_role:
