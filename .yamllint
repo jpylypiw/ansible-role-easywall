@@ -24,4 +24,4 @@ rules:
   truthy: enable
 
 ignore: |
-  .github/workflows/python-package.yml
+  .github/workflows/*.yml

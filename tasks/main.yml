@@ -41,9 +41,9 @@
 - name: "stop easywall-web and disable service when webinterface is false"
   systemd:
     name: easywall-web
-    enabled: no
+    enabled: false
     state: stopped
-    masked: yes
+    masked: true
   when: not webinterface
 
 - name: "ensure easywall is restarted"
