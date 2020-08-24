@@ -36,4 +36,4 @@ jobs:
 
       - name: Ansible Linting
         run: |
-          ansible-lint --exclude roles --force-color -p -x 204 -v
+          ansible-lint --exclude roles --force-color -p -x 204,106 -v

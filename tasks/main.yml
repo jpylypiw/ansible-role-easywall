@@ -36,7 +36,7 @@
   shell: |
     cd /opt/easywall
     python3 easywall_web/passwd.py -u {{ easywall_username }} -p '{{ easywall_password }}'
-  when: webinterface and easywall_username != "" and easywall_password != ""
+  when: webinterface and easywall_username | length > 0 and easywall_password | length > 0
 
 - name: "stop easywall-web and disable service when webinterface is false"
   systemd:
