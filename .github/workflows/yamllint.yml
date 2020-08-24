@@ -1,0 +1,36 @@
+# documentation on https://help.github.com/en/actions/language-and-framework-guides/using-python-with-github-actions
+name: testing
+
+on: [push, pull_request]
+
+jobs:
+  testing:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8]
+
+    steps:
+      - name: Check out the Repository
+        uses: actions/checkout@master
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@master
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install Python dependencies
+        run: |
+          python --version
+          python -m pip install --upgrade pip
+
+      - name: Prepare Python Environment
+        run: |
+          pip install --upgrade yamllint virtualenv
+          virtualenv venv
+          source venv/bin/activate
+          yamllint --version
+
+      - name: Yamllint
+        run: |
+          yamllint .

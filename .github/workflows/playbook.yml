@@ -34,30 +34,7 @@ jobs:
         run: |
           pip install --upgrade ansible
           ansible --version
-          pip install --upgrade ansible-lint
-          ansible-lint --version
-          pip install --upgrade yamllint
-          yamllint --version
 
-      # - name: Execute Playbook
-      #   run: |
-      #     ansible-playbook tests/test.yml -c local
-
-      - name: Ansible Linting
+      - name: Execute Playbook
         run: |
-          ansible-lint --exclude roles --force-color -p -x 204 -v
-
-      - name: Yamllint
-        run: |
-          yamllint .
-
-  markdownlint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out the Repository
-        uses: actions/checkout@master
-
-      - name: Run markdownlint (mdl)
-        uses: bewuethr/mdl-action@master
-        with:
-          style-file: .github/workflows/markdownlint.rb
+          ansible-playbook tests/test.yml -c local
