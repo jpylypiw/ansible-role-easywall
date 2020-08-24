@@ -9,3 +9,7 @@ easywall_password: ""
 # Set to true to ensure other firewall management software is disabled.
 firewall_disable_firewalld: true
 firewall_disable_ufw: true
+
+# set ssl certificate options
+ssl_cert_path: ""
+ssl_key_path: ""
