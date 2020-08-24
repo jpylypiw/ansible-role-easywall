@@ -36,4 +36,4 @@ jobs:
 
       - name: Execute Playbook
         run: |
-          ansible-playbook tests/test.yml -c local -vvv
+          ansible-playbook tests/test.yml -c local --check
