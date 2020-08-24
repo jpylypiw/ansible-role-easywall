@@ -1,10 +1,10 @@
 ---
-# install the webinterface for easywall core
+# install variable to check if the webinterface should be installed.
 webinterface: true
 
-# has to be programmed
-# easywall_username: "easywall"
-# easywall_password: "easywall"
+# variables to set the easywall username and password using the ansible role
+easywall_username: ""
+easywall_password: ""
 
 # Set to true to ensure other firewall management software is disabled.
 firewall_disable_firewalld: true
