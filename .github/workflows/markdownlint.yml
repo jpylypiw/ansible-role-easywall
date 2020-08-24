@@ -3,7 +3,7 @@ name: markdownlint
 on: ["push", "pull_request"]
 
 jobs:
-  test:
+  testing:
     runs-on: ubuntu-latest
     steps:
       - name: Check out the Repository
