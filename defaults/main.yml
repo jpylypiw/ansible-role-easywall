@@ -1,18 +1,67 @@
 ---
-# set to true to install package updates when executing the playbook
-install_updates: false
-
 # install variable to check if the webinterface should be installed.
 webinterface: true
 
-# variables to set the easywall username and password using the ansible role
-easywall_username: ""
-easywall_password: ""
+# set to true to install package updates when executing the playbook
+install_updates: false
 
-# Set to true to ensure other firewall management software is disabled.
-firewall_disable_firewalld: true
-firewall_disable_ufw: true
+# set to true to overwrite configuration variables
+overwrite_config: false
+
+# variables for log.ini
+log_level: "info"
+log_to_files: true
+log_to_stdout: true
+log_filepath: "/var/log"
+log_filename: "easywall.log"
+
+# variables for web.ini
+web_username: ""
+web_password: ""
+web_login_attempts: 10
+web_login_bantime: 1800
+web_https_socket: "0.0.0.0:12227,ssl/easywall.crt,ssl/easywall.key,HIGH"
+web_processes: 5
+web_threads: 2
 
 # set ssl certificate options
 ssl_cert_path: ""
 ssl_key_path: ""
+
+# variables for easywall.ini
+easywall_log_blocked_connections: true
+easywall_log_blocked_connections_log_limit: 60
+easywall_log_blacklist_connections: false
+easywall_log_blacklist_connections_log_limit: 60
+easywall_drop_broadcast_packets: false
+easywall_drop_multicast_packets: false
+easywall_drop_anycast_packets: false
+easywall_ssh_brute_force_prevention: false
+easywall_ssh_brute_force_prevention_log: false
+easywall_ssh_brute_force_prevention_connection_limit: 5
+easywall_ssh_brute_force_prevention_log_limit: 60
+easywall_icmp_flood_prevention: false
+easywall_icmp_flood_prevention_log: false
+easywall_icmp_flood_prevention_connection_limit: 5
+easywall_icmp_flood_prevention_log_limit: 60
+easywall_drop_invalid_packets: false
+easywall_drop_invalid_packets_log: false
+easywall_drop_invalid_packets_log_limit: 60
+easywall_port_scan_prevention: false
+easywall_port_scan_prevention_log: false
+easywall_port_scan_prevention_log_limit: 60
+easywall_ipv6_enabled: true
+easywall_ipv6_icmp_allow_router_advertisement: true
+easywall_ipv6_icmp_allow_neighbor_advertisement: true
+easywall_acceptance_enabled: true
+easywall_acceptance_duration: 120
+easywall_exec_iptables: "/sbin/iptables"
+easywall_exec_ip6tables: "/sbin/ip6tables"
+easywall_exec_iptables_save: "/sbin/iptables-save"
+easywall_exec_ip6tables_save: "/sbin/ip6tables-save"
+easywall_exec_iptables_restore: "/sbin/iptables-restore"
+easywall_exec_ip6tables_restore: "/sbin/ip6tables-restore"
+
+# Set to true to ensure other firewall management software is disabled.
+firewall_disable_firewalld: true
+firewall_disable_ufw: true
