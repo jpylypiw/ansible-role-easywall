@@ -1,0 +1,25 @@
+[WEB]
+username =
+password =
+login_attempts = {{ web_login_attempts }}
+login_bantime = {{ web_login_bantime }}
+# this is only used when running in debug mode
+bindip = 127.0.0.1
+bindport = 12227
+
+[VERSION]
+version = 0
+sha = 0
+date = 1990-01-01T00:00:00Z
+timestamp = 0
+
+[uwsgi]
+ssl-option = 268435456
+https-socket = {{ web_https_socket }}
+processes = {{ web_processes }}
+threads = {{ web_threads }}
+callable = APP
+master = yes
+die-on-term = yes
+wsgi-file = easywall/web/__main__.py
+need-plugin = python3

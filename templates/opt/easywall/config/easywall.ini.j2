@@ -1,0 +1,40 @@
+[IPTABLES]
+log_blocked_connections = {{ easywall_log_blocked_connections }}
+log_blocked_connections_log_limit = {{ easywall_log_blocked_connections_log_limit }}
+log_blacklist_connections = {{ easywall_log_blacklist_connections }}
+log_blacklist_connections_log_limit = {{ easywall_log_blacklist_connections_log_limit }}
+drop_broadcast_packets = {{ easywall_drop_broadcast_packets }}
+drop_multicast_packets = {{ easywall_drop_multicast_packets }}
+drop_anycast_packets = {{ easywall_drop_anycast_packets }}
+ssh_brute_force_prevention = {{ easywall_ssh_brute_force_prevention }}
+ssh_brute_force_prevention_log = {{ easywall_ssh_brute_force_prevention_log }}
+ssh_brute_force_prevention_connection_limit = {{ easywall_ssh_brute_force_prevention_connection_limit }}
+ssh_brute_force_prevention_log_limit = {{ easywall_ssh_brute_force_prevention_log_limit }}
+icmp_flood_prevention = {{ easywall_icmp_flood_prevention }}
+icmp_flood_prevention_log = {{ easywall_icmp_flood_prevention_log }}
+icmp_flood_prevention_connection_limit = {{ easywall_icmp_flood_prevention_connection_limit }}
+icmp_flood_prevention_log_limit = {{ easywall_icmp_flood_prevention_log_limit }}
+drop_invalid_packets = {{ easywall_drop_invalid_packets }}
+drop_invalid_packets_log = {{ easywall_drop_invalid_packets_log }}
+drop_invalid_packets_log_limit = {{ easywall_drop_invalid_packets_log_limit }}
+port_scan_prevention = {{ easywall_port_scan_prevention }}
+port_scan_prevention_log = {{ easywall_port_scan_prevention_log }}
+port_scan_prevention_log_limit = {{ easywall_port_scan_prevention_log_limit }}
+
+[IPV6]
+enabled = {{ easywall_ipv6_enabled }}
+icmp_allow_router_advertisement = {{ easywall_ipv6_icmp_allow_router_advertisement }}
+icmp_allow_neighbor_advertisement = {{ easywall_ipv6_icmp_allow_neighbor_advertisement }}
+
+[ACCEPTANCE]
+enabled = {{ easywall_acceptance_enabled }}
+duration = {{ easywall_acceptance_duration }}
+timestamp =
+
+[EXEC]
+iptables = {{ easywall_exec_iptables }}
+ip6tables = {{ easywall_exec_ip6tables }}
+iptables-save = {{ easywall_exec_iptables_save }}
+ip6tables-save = {{ easywall_exec_ip6tables_save }}
+iptables-restore = {{ easywall_exec_iptables_restore }}
+ip6tables-restore = {{ easywall_exec_ip6tables_restore }}
