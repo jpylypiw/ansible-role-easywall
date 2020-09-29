@@ -5,3 +5,8 @@
   systemd:
     name: easywall-web
     state: restarted
+
+- name: "restart-core"
+  systemd:
+    name: easywall
+    state: restarted
