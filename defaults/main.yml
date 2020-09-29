@@ -1,4 +1,7 @@
 ---
+# set to true to install package updates when executing the playbook
+install_updates: false
+
 # install variable to check if the webinterface should be installed.
 webinterface: true
 

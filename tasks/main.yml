@@ -32,6 +32,13 @@
     update_cache: true
     name: easywall
 
+- name: "update easywall package to latest version"
+  apt:
+    state: latest
+    update_cache: true
+    name: easywall
+  when: install_updates | bool
+
 - name: "set up username and password"
   shell: |
     cd /opt/easywall
