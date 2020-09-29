@@ -74,8 +74,8 @@
 - name: "set up username and password"
   shell: |
     cd /opt/easywall
-    python3 easywall/web/passwd.py -u {{ easywall_username }} -p '{{ easywall_password }}'
-  when: webinterface and easywall_username | length > 0 and easywall_password | length > 0
+    python3 easywall/web/passwd.py -u {{ web_username }} -p '{{ web_password }}'
+  when: webinterface and web_username | length > 0 and web_password | length > 0
   notify: "restart-web"
 
 - name: "copy ssl certificate on the remote system to easywall install dir"
