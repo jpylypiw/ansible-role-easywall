@@ -39,6 +39,38 @@
     name: easywall
   when: install_updates | bool
 
+- name: update configuration file - /opt/easywall/config/log.ini
+  template:
+    src: opt/easywall/config/log.ini.j2
+    dest: /opt/easywall/config/log.ini
+    owner: easywall
+    group: easywall
+    mode: 0644
+  notify:
+    - "restart-core"
+    - "restart-web"
+  when: overwrite_config | bool
+
+- name: update configuration file - /opt/easywall/config/web.ini
+  template:
+    src: opt/easywall/config/web.ini.j2
+    dest: /opt/easywall/config/web.ini
+    owner: easywall
+    group: easywall
+    mode: 0644
+  notify: "restart-web"
+  when: overwrite_config | bool
+
+- name: update configuration file - /opt/easywall/config/easywall.ini
+  template:
+    src: opt/easywall/config/easywall.ini.j2
+    dest: /opt/easywall/config/easywall.ini
+    owner: easywall
+    group: easywall
+    mode: 0644
+  notify: "restart-core"
+  when: overwrite_config | bool
+
 - name: "set up username and password"
   shell: |
     cd /opt/easywall
