@@ -16,8 +16,8 @@ The role requires the following operating system versions:
 webinterface: true
 
 # variables to set the easywall username and password using the ansible role
-easywall_username: ""
-easywall_password: ""
+web_username: ""
+web_password: ""
 
 # Set to true to ensure other firewall management software is disabled.
 firewall_disable_firewalld: true
@@ -50,8 +50,8 @@ Including an example of how to use your role (for instance, with variables passe
         name: ansible-role-easywall
       vars:
         webinterface: true
-        easywall_username: "{{ vault_easywall_username }}"
-        easywall_password: "{{ vault_easywall_password }}"
+        web_username: "{{ vault_web_username }}"
+        web_password: "{{ vault_web_password }}"
         ssl_cert_path: "/etc/ssl/certs/certificate.pem"
         ssl_key_path: "/etc/ssl/private/privatekey.pem"
 ```

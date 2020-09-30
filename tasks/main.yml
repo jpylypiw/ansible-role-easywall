@@ -31,8 +31,9 @@
     state: present
     update_cache: true
     name: easywall
+  when: not install_updates | bool
 
-- name: "update easywall package to latest version"
+- name: "install or upgrade easywall package to latest version"
   apt:
     state: latest
     update_cache: true
@@ -45,7 +46,7 @@
     dest: /opt/easywall/config/log.ini
     owner: easywall
     group: easywall
-    mode: 0644
+    mode: "0644"
   notify:
     - "restart-core"
     - "restart-web"
@@ -57,7 +58,7 @@
     dest: /opt/easywall/config/web.ini
     owner: easywall
     group: easywall
-    mode: 0644
+    mode: "0644"
   notify: "restart-web"
   when: overwrite_config | bool
 
@@ -67,15 +68,15 @@
     dest: /opt/easywall/config/easywall.ini
     owner: easywall
     group: easywall
-    mode: 0644
+    mode: "0644"
   notify: "restart-core"
   when: overwrite_config | bool
 
 - name: "set up username and password"
   shell: |
     cd /opt/easywall
-    python3 easywall/web/passwd.py -u {{ easywall_username }} -p '{{ easywall_password }}'
-  when: webinterface and easywall_username | length > 0 and easywall_password | length > 0
+    python3 easywall/web/passwd.py -u {{ web_username }} -p '{{ web_password }}'
+  when: webinterface and web_username | length > 0 and web_password | length > 0
   notify: "restart-web"
 
 - name: "copy ssl certificate on the remote system to easywall install dir"
